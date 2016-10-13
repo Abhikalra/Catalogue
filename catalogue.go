@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/hyperledger/fabric/core/chaincode/shim"
@@ -153,7 +152,7 @@ func (t *SimpleChaincode) Invoke(stub *shim.ChaincodeStub, function string, args
 			buff, err = InvokeRequest(stub, function, args)
 		}
 
-	fmt.Println("Invoke() Invalid recType : " + args[0:])
+	fmt.Println("Invoke() Invalid recType : " + args)
 		//return nil, errors.New("Invoke() : Invalid recType : " + args[0])
 
 	return buff, err
@@ -339,20 +338,11 @@ func GetItemlog(stub *shim.ChaincodeStub, function string, args []string) ([]byt
 
 func AddItem(stub *shim.ChaincodeStub, function string, args []string) ([]byte, error) {
 
-	record, err := []string{arg[0],arg[1],arg[2],arg[3],arg[4],arg[5]} //
-	if err != nil {
-		return nil, err
-	}
-//	buff, err := UsertoJSON(record) //
-
-	if err != nil {
-		fmt.Println("AddItem() : Failed Cannot create object buffer for write : ", args[1])
-		return nil, errors.New("AddItem(): Failed Cannot create object buffer for write : " + args[1])
-	} else {
+	 {
 		// Update the ledger with the Buffer Data
 		// err = stub.PutState(args[0], buff)
 		keys := []string{args[0]}
-		err = UpdateLedger(stub, "ItemObject", keys, record)
+		err = UpdateLedger(stub, "ItemObject", keys, args)
 		if err != nil {
 			fmt.Println("AddItem() : write error while inserting record")
 			return nil, err
@@ -373,20 +363,12 @@ func AddItem(stub *shim.ChaincodeStub, function string, args []string) ([]byte, 
 
 func BuyItem(stub *shim.ChaincodeStub, function string, args []string) ([]byte, error) {
 
-	record, err := []string{arg[0],arg[1],arg[2],arg[3],arg[4],time.Now().String()} //
-	if err != nil {
-		return nil, err
-	}
-//	buff, err := UsertoJSON(record) //
-
-	if err != nil {
-		fmt.Println("BuyItem() : Failed Cannot create object buffer for write : ", args[1])
-		return nil, errors.New("BuyItem(): Failed Cannot create object buffer for write : " + args[1])
-	} else {
+	args[5]:=time.Now().String() //
+	 {
 		// Update the ledger with the Buffer Data
 		// err = stub.PutState(args[0], buff)
 		keys := []string{args[0]}
-		err = UpdateLedger(stub, "ItemPurchase", keys, record)
+		err = UpdateLedger(stub, "ItemPurchase", keys, args)
 		if err != nil {
 			fmt.Println("BuyItem() : write error while inserting record")
 			return nil, err
