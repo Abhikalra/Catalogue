@@ -1,21 +1,10 @@
 package main
 
 import (
-	"bufio"
-	"bytes"
-	"crypto/aes"
-	"crypto/cipher"
-	"crypto/rand"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/hyperledger/fabric/core/chaincode/shim"
-	"io"
-	"net/http"
-	"os"
-	"os/exec"
-	"runtime"
-	"strconv"
 	"strings"
 	"time"
 	)
