@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/hyperledger/fabric/core/chaincode/shim"
-	"strings"
 	"time"
 	)
 
@@ -125,11 +124,11 @@ func (t *SimpleChaincode) Init(stub *shim.ChaincodeStub, function string, args [
 	//	}
 		err = InitLedger(stub, "ItemObject")
 		if err != nil {
-			return nil, fmt.Errorf("Init(): InitLedger of %s  Failed ", val)
+			return nil, fmt.Errorf("Init(): InitLedger of ItemObject  Failed " )
 		}
         err = InitLedger(stub, "ItemPurchase")
 		if err != nil {
-			return nil, fmt.Errorf("Init(): InitLedger of %s  Failed ", val)
+			return nil, fmt.Errorf("Init(): InitLedger of ItemPurchase  Failed ")
 		}
 	//}
 
@@ -154,7 +153,7 @@ func (t *SimpleChaincode) Invoke(stub *shim.ChaincodeStub, function string, args
 			buff, err = InvokeRequest(stub, function, args)
 		}
 
-		fmt.Println("Invoke() Invalid recType : " + args)
+	fmt.Println("Invoke() Invalid recType : " + args[0:])
 		//return nil, errors.New("Invoke() : Invalid recType : " + args[0])
 
 	return buff, err
@@ -198,7 +197,7 @@ func GetItem(stub *shim.ChaincodeStub, function string, args []string) ([]byte, 
 	var err error
 
 	// Get the Object and Display it
-	Avalbytes, err := QueryLedger(stub, "ItemObject", args[0])
+	Avalbytes, err := QueryLedger(stub, "ItemObject", args)
 	if err != nil {
 		fmt.Println("GetItem() : Failed to Query Object ")
 		jsonResp := "{\"Error\":\"Failed to get  Object Data for " + args[0] + "\"}"
@@ -226,7 +225,7 @@ func GetPurchase(stub *shim.ChaincodeStub, function string, args []string) ([]by
 	var err error
 
 	// Get the Object and Display it
-	Avalbytes, err := QueryLedger(stub, "ItemPurchase", args[0])
+	Avalbytes, err := QueryLedger(stub, "ItemPurchase", args)
 	if err != nil {
 		fmt.Println("GetPurchase() : Failed to Query Object ")
 		jsonResp := "{\"Error\":\"Failed to get  Object Data for " + args[0] + "\"}"
@@ -254,7 +253,7 @@ func GetPurchasebyBuyer(stub *shim.ChaincodeStub, function string, args []string
 	var err error
 
 	// Get the Object and Display it
-	Avalbytes, err := QueryLedger(stub, "ItemPurchase", args[0])
+	Avalbytes, err := QueryLedger(stub, "ItemPurchase", args)
 	if err != nil {
 		fmt.Println("GetPurchasebyBuyer() : Failed to Query Object ")
 		jsonResp := "{\"Error\":\"Failed to get  Object Data for " + args[0] + "\"}"
@@ -280,7 +279,7 @@ func GetPurchaselog(stub *shim.ChaincodeStub, function string, args []string) ([
 	var err error
 
 	// Get the Object and Display it
-	Avalbytes, err := QueryLedger(stub, "ItemPurchase", args[0])
+	Avalbytes, err := QueryLedger(stub, "ItemPurchase", args)
 	if err != nil {
 		fmt.Println("GetPurchaselog() : Failed to Query Object ")
 		jsonResp := "{\"Error\":\"Failed to get  Object Data for " + args[0] + "\"}"
@@ -308,7 +307,7 @@ func GetItemlog(stub *shim.ChaincodeStub, function string, args []string) ([]byt
 	var err error
 
 	// Get the Object and Display it
-	Avalbytes, err := QueryLedger(stub, "ItemPurchase", args[0])
+	Avalbytes, err := QueryLedger(stub, "ItemPurchase", args)
 	if err != nil {
 		fmt.Println("GetItemlog() : Failed to Query Object ")
 		jsonResp := "{\"Error\":\"Failed to get  Object Data for " + args[0] + "\"}"
