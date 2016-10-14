@@ -38,9 +38,9 @@ func (t *SimpleChaincode) Init(stub *shim.ChaincodeStub, function string, args [
 	err := stub.CreateTable("Student_Record", []*shim.ColumnDefinition{
 		&shim.ColumnDefinition{Name: "BannerID", Type: shim.ColumnDefinition_STRING, Key: true},
 		&shim.ColumnDefinition{Name: "Name", Type: shim.ColumnDefinition_STRING, Key: false},
-        &shim.ColumnDefinition{Name: "Subject1", Type: shim.ColumnDefinition_STRING, Key: false},
-        &shim.ColumnDefinition{Name: "Subject2", Type: shim.ColumnDefinition_STRING, Key: false},
-        &shim.ColumnDefinition{Name: "Subject3", Type: shim.ColumnDefinition_STRING, Key: false},
+        	&shim.ColumnDefinition{Name: "Subject1", Type: shim.ColumnDefinition_STRING, Key: false},
+        	&shim.ColumnDefinition{Name: "Subject2", Type: shim.ColumnDefinition_STRING, Key: false},
+        	&shim.ColumnDefinition{Name: "Subject3", Type: shim.ColumnDefinition_STRING, Key: false},
 
 	})
 	if err != nil {
@@ -60,7 +60,7 @@ func (t *SimpleChaincode) Invoke(stub *shim.ChaincodeStub, function string, args
 
 	// Handle different functions
 	if function == "addDetail" {
-		// 
+		// trigger add detail function to add student info
 		return t.addDetail(stub,"addDetail", args)
 	}else if function == "init" {
 		return t.Init(stub,"Init",args)
@@ -84,12 +84,14 @@ func (t *SimpleChaincode) Query(stub *shim.ChaincodeStub, function string, args 
 	return nil, errors.New("Received unknown function in query")
 }
 
-// Get detail function
+// ////////////////////////////////////////////////////////////////////////////////////
+// GetDetail Function
+// Fetches matching row corresponding to provided key value of student name
+// User defined function triggered in Query 
+// ///////////////////////////////////////////////////////////////////////////////////
 
 func (t *SimpleChaincode) getDetail(stub *shim.ChaincodeStub, function string, args []string) ([]byte, error) {
-	var opt string
-	opt = "OKAY"
-	/*var err error
+	var err error
 	if len(args) != 1 {
 		return nil, errors.New("Incorrect number of arguments. Expecting name of student to fetch data")
 	}
@@ -105,10 +107,9 @@ func (t *SimpleChaincode) getDetail(stub *shim.ChaincodeStub, function string, a
 	if err != nil {
 				return nil, fmt.Errorf("Failed retriving value")
 	}
-*/
 
-	//return row.Columns[0].GetBytes(), nil
-	return []byte(opt),nil
+
+	return (row.Columns[0].GetBytes() + row.Columns[1].GetBytes() + row.Columns[2].GetBytes() + row.Columns[3].GetBytes() + row.Columns[4].GetBytes()), nil
 }
 
 
