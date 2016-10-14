@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"errors"
 	"fmt"
 	"github.com/hyperledger/fabric/core/chaincode/shim"
@@ -101,7 +100,7 @@ func (t *SimpleChaincode) getDetail(stub *shim.ChaincodeStub, function string, a
 	col1 := shim.Column{Value: &shim.Column_String_{String_: name}}
 	columns = append(columns, col1)
 
-	record, err := stub.GetRow("Student_Record", columns)
+	ok, err := stub.GetRow("Student_Record", columns)
 	if err != nil {
 				return nil, fmt.Errorf("Failed retriving value")
 	}
@@ -125,7 +124,7 @@ func (t *SimpleChaincode) addDetail(stub *shim.ChaincodeStub, function string, a
 	marks2 := args[3]
 	marks3 := args[4]
 	
-	record, err = stub.InsertRow("Student_Record", shim.Row{
+	ok, err = stub.InsertRow("Student_Record", shim.Row{
 		Columns: []*shim.Column{
 			&shim.Column{Value: &shim.Column_String_{String_: bannerID}},
 			&shim.Column{Value: &shim.Column_String_{String_: name}},
@@ -134,7 +133,7 @@ func (t *SimpleChaincode) addDetail(stub *shim.ChaincodeStub, function string, a
 			&shim.Column{Value: &shim.Column_String_{String_: marks3}}},
 	})
 
-	if !record && err == nil {
+	if !ok && err == nil {
 		return nil, errors.New("Record already added...")
 	}
 
