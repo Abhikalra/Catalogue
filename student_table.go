@@ -62,9 +62,9 @@ func (t *SimpleChaincode) Invoke(stub *shim.ChaincodeStub, function string, args
 	if function == "addDetail" {
 		// 
 		return t.addDetail(stub,"addDetail", args)
-	}
-	else if function == "init"
-		{return t.Init(stub,"Init",args)} 
+	}else if function == "init" {
+		return t.Init(stub,"Init",args)
+	} 
 
 	return nil, errors.New("Received unknown function invocation")
 }
@@ -78,8 +78,7 @@ func (t *SimpleChaincode) Query(stub *shim.ChaincodeStub, function string, args 
 	if function != "getDetail" {
 		return nil, errors.New("Invalid query function name. Expecting 'getDetail'")
 	}
-	else
-	{
+	else {
 		return t.getDetail(stub,"getDetail", args)
 	}
 
@@ -131,8 +130,7 @@ func (t *SimpleChaincode) addDetail(stub *shim.ChaincodeStub, function string, a
 			&shim.Column{Value: &shim.Column_String{String_: name}},
 			&shim.Column{Value: &shim.Column_String{String_: marks1}},
 			&shim.Column{Value: &shim.Column_String{String_: marks2}},
-			&shim.Column{Value: &shim.Column_String{String_: marks3}}			
-			},
+			&shim.Column{Value: &shim.Column_String{String_: marks3}}},
 	})
 
 	if !record && err == nil {
@@ -142,6 +140,4 @@ func (t *SimpleChaincode) addDetail(stub *shim.ChaincodeStub, function string, a
 	return success.GetBytes(), err
 }
 
-	
-}
 
