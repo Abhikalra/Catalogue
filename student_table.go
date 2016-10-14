@@ -112,6 +112,7 @@ func (t *SimpleChaincode) getDetail(stub *shim.ChaincodeStub, function string, a
 func (t *SimpleChaincode) addDetail(stub *shim.ChaincodeStub, function string, args []string) ([]byte, error) {
 	var err error
 	var success string
+	var ok bool
 	if len(args) !=5 {
 		return nil, errors.New("Incorrect number of arguments. Expecting five arguments in addDetail()")
 	}
