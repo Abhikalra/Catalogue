@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"github.com/hyperledger/fabric/core/chaincode/shim"
@@ -106,7 +107,7 @@ func (t *SimpleChaincode) getDetail(stub *shim.ChaincodeStub, function string, a
 	}
 
 
-	return []byte(record), nil
+	return []byte("success"), nil
 }
 
 
