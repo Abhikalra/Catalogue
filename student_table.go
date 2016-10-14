@@ -47,7 +47,7 @@ func (t *SimpleChaincode) Init(stub *shim.ChaincodeStub, function string, args [
 		return nil, errors.New("Failed creating Student record table.")
 	}
 
-	return []byte("Initialization complete for "+args[0]), nil
+	return []byte("Initialization complete for " + args[0]), nil
 }
 
 // ////////////////////////////////////////////////////////////////////////////////////
@@ -76,12 +76,12 @@ func (t *SimpleChaincode) Invoke(stub *shim.ChaincodeStub, function string, args
 func (t *SimpleChaincode) Query(stub *shim.ChaincodeStub, function string, args []string) ([]byte, error) {
 	
 	if function != "getDetail" {
-		return nil, errors.New("Invalid query function name. Expecting 'getDetail'")
+		return nil, errors.New("Invalid query function name. Expecting getDetail")
 	}
 	if function == "getDetail" {
 		return t.getDetail(stub,"getDetail", args)
 	}
-
+	return nil, errors.New("Received unknown function in query")
 }
 
 // Get detail function
@@ -106,7 +106,7 @@ func (t *SimpleChaincode) getDetail(stub *shim.ChaincodeStub, function string, a
 	}
 
 
-	return record.GetBytes(), nil
+	return []byte(record), nil
 }
 
 
@@ -127,17 +127,15 @@ func (t *SimpleChaincode) addDetail(stub *shim.ChaincodeStub, function string, a
 	record, err = stub.InsertRow("Student_Record", shim.Row{
 		Columns: []*shim.Column{
 			&shim.Column{Value: &shim.Column_String_{String_: bannerID}},
-			&shim.Column{Value: &shim.Column_String{String_: name}},
-			&shim.Column{Value: &shim.Column_String{String_: marks1}},
-			&shim.Column{Value: &shim.Column_String{String_: marks2}},
-			&shim.Column{Value: &shim.Column_String{String_: marks3}}},
+			&shim.Column{Value: &shim.Column_String_{String_: name}},
+			&shim.Column{Value: &shim.Column_String_{String_: marks1}},
+			&shim.Column{Value: &shim.Column_String_{String_: marks2}},
+			&shim.Column{Value: &shim.Column_String_{String_: marks3}}},
 	})
 
 	if !record && err == nil {
 		return nil, errors.New("Record already added...")
 	}
 
-	return success.GetBytes(), err
+	return []byte(success), err
 }
-
-
