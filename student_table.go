@@ -87,7 +87,9 @@ func (t *SimpleChaincode) Query(stub *shim.ChaincodeStub, function string, args 
 // Get detail function
 
 func (t *SimpleChaincode) getDetail(stub *shim.ChaincodeStub, function string, args []string) ([]byte, error) {
-	var err error
+	var opt string
+	opt = "OKAY"
+	/*var err error
 	if len(args) != 1 {
 		return nil, errors.New("Incorrect number of arguments. Expecting name of student to fetch data")
 	}
@@ -103,9 +105,10 @@ func (t *SimpleChaincode) getDetail(stub *shim.ChaincodeStub, function string, a
 	if err != nil {
 				return nil, fmt.Errorf("Failed retriving value")
 	}
+*/
 
-
-	return row.Columns[0].GetBytes(), nil
+	//return row.Columns[0].GetBytes(), nil
+	return []byte(opt),nil
 }
 
 
