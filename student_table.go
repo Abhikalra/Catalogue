@@ -88,7 +88,7 @@ func (t *SimpleChaincode) Query(stub *shim.ChaincodeStub, function string, args 
 
 func (t *SimpleChaincode) getDetail(stub *shim.ChaincodeStub, function string, args []string) ([]byte, error) {
 	var err error
-
+	var ok string
 	if len(args) != 1 {
 		return nil, errors.New("Incorrect number of arguments. Expecting name of student to fetch data")
 	}
@@ -112,6 +112,7 @@ func (t *SimpleChaincode) getDetail(stub *shim.ChaincodeStub, function string, a
 
 func (t *SimpleChaincode) addDetail(stub *shim.ChaincodeStub, function string, args []string) ([]byte, error) {
 	var err error
+	var ok string
 	var success string
 	if len(args) !=5 {
 		return nil, errors.New("Incorrect number of arguments. Expecting five arguments in addDetail()")
