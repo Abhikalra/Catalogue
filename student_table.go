@@ -99,13 +99,13 @@ func (t *SimpleChaincode) getDetail(stub *shim.ChaincodeStub, function string, a
 	col1 := shim.Column{Value: &shim.Column_String_{String_: name}}
 	columns = append(columns, col1)
 
-	ok, err := stub.GetRow("Student_Record", columns)
+	row, err := stub.GetRow("Student_Record", columns)
 	if err != nil {
 				return nil, fmt.Errorf("Failed retriving value")
 	}
 
 
-	return []byte(ok.Columns[0]), nil
+	return row.Columns[0].GetBytes(), nil
 }
 
 
