@@ -78,7 +78,7 @@ func (t *SimpleChaincode) Query(stub *shim.ChaincodeStub, function string, args 
 	if function != "getDetail" {
 		return nil, errors.New("Invalid query function name. Expecting 'getDetail'")
 	}
-	else {
+	if function == "getDetail" {
 		return t.getDetail(stub,"getDetail", args)
 	}
 
