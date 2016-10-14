@@ -110,8 +110,8 @@ func (t *SimpleChaincode) getDetail(stub *shim.ChaincodeStub, function string, a
 	}
 
 	
-	//output = row.Columns[0] + row.Columns[1] + row.Columns[2] + row.Columns[3] + row.Columns[4]
-	return row.GetBytes(), nil
+	output = string(row.Columns[0].GetBytes()) + string(row.Columns[1].GetBytes()) + string(row.Columns[2].GetBytes()) + string(row.Columns[3].GetBytes()) + string(row.Columns[4].GetBytes())
+	return []byte(output), nil
 }
 
 
