@@ -123,7 +123,7 @@ func (t *SimpleChaincode) addDetail(stub *shim.ChaincodeStub, function string, a
 	marks2 := args[3]
 	marks3 := args[4]
 	
-	ok, err = stub.InsertRow("Student_Record", shim.Row{
+	ok , err = stub.InsertRow("Student_Record", shim.Row{
 		Columns: []*shim.Column{
 			&shim.Column{Value: &shim.Column_String_{String_: bannerID}},
 			&shim.Column{Value: &shim.Column_String_{String_: name}},
